@@ -1,0 +1,11 @@
+require('dotenv').config();
+const express = require('express'); const cors = require('cors'); const { Sequelize, DataTypes } = require('sequelize');
+const app = express(); const db = new Sequelize(process.env.DATABASE_URL, { dialect: 'postgres', logging: false });
+const Patient = db.define('Patient', { name: { type: DataTypes.STRING, allowNull: false }, doctor: { type: DataTypes.STRING, allowNull: false }, status: { type: DataTypes.STRING, defaultValue: 'Waiting' } });
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' })); app.use(express.json());
+app.get('/api/patients', async (_req, res, next) => { try { res.json(await Patient.findAll({ order: [['createdAt', 'DESC']] })); } catch (e) { next(e); } });
+app.post('/api/patients', async (req, res, next) => { try { if (!req.body.name || !req.body.doctor) return res.status(400).json({ error: 'name and doctor are required' }); res.status(201).json(await Patient.create(req.body)); } catch (e) { next(e); } });
+app.patch('/api/patients/:id', async (req, res, next) => { try { const patient = await Patient.findByPk(req.params.id); if (!patient) return res.status(404).json({ error: 'Patient not found' }); await patient.update(req.body); res.json(patient); } catch (e) { next(e); } });
+app.delete('/api/patients/:id', async (req, res, next) => { try { const count = await Patient.destroy({ where: { id: req.params.id } }); if (!count) return res.status(404).json({ error: 'Patient not found' }); res.status(204).end(); } catch (e) { next(e); } });
+app.use((e, _req, res, _next) => { console.error(e); res.status(500).json({ error: 'Database request failed' }); });
+db.sync().then(() => app.listen(process.env.PORT || 5000, () => console.log('Backend ready'))).catch(console.error);

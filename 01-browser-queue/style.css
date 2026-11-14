@@ -1,0 +1,14 @@
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px system-ui, sans-serif; background: #eef4f8; color: #17324d; }
+.container { max-width: 850px; margin: 40px auto; padding: 20px; }
+.card, .toolbar, #queue li { background: white; border-radius: 10px; padding: 16px; margin: 12px 0; box-shadow: 0 2px 8px #17324d18; }
+form, .toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+input, select, button { padding: 10px; border: 1px solid #b9c9d5; border-radius: 6px; }
+input { flex: 1; min-width: 160px; }
+button { cursor: pointer; background: #146c94; color: white; border: 0; }
+button.delete { background: #b42318; }
+#queue { list-style: none; padding: 0; }
+#queue li { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.badge { padding: 4px 8px; border-radius: 12px; background: #dcecf4; }
+.urgent { border-left: 5px solid #e05d44 !important; }
+#message { min-height: 1.2em; }

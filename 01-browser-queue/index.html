@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinic Queue</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Clinic Queue Management</h1>
+    <section class="card">
+      <form id="patient-form">
+        <input id="patient-name" placeholder="Patient name" required minlength="2">
+        <input id="doctor-name" placeholder="Doctor" required>
+        <select id="priority"><option>Normal</option><option>Urgent</option></select>
+        <button type="submit">Add patient</button>
+      </form>
+      <p id="message" role="status"></p>
+    </section>
+    <section class="toolbar">
+      <input id="search" placeholder="Search patients...">
+      <select id="status-filter"><option value="all">All statuses</option><option>Waiting</option><option>Serving</option><option>Completed</option></select>
+      <button id="load-sample" type="button">GET sample data</button>
+    </section>
+    <ul id="queue"></ul>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
